@@ -3,13 +3,36 @@ package ex.rest.service;
 import ex.rest.model.City;
 import ex.rest.model.Country;
 import ex.rest.model.State;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class CountryService implements ICountryService {
 
-    private static List < Country > _countries;
+    private static List<Country> _countries;
+
+    public CountryService () {
+        var city = new City();
+        city.ID = 1;
+        city.set_name("Cidade 1");
+
+        var state = new State();
+        state.ID = 999L;
+        state.setName("State A");
+        state.setCities(new ArrayList<City>(){{ add(city); }});
+
+        var country = new Country();
+        country.ID = UUID.randomUUID();
+        country.setName("Country ABC");
+        country.setStates(new ArrayList<State>(){{ add(state); }});
+
+        _countries = new ArrayList<Country>(){{
+            add(country);
+        }};
+    }
 
     @Override
     public City Get(Integer ID) {
@@ -41,6 +64,11 @@ public class CountryService implements ICountryService {
                 )
             ).findFirst().get();
         return country;
+    }
+
+    @Override
+    public List<Country> GetAll() {
+        return _countries;
     }
 
     @Override
