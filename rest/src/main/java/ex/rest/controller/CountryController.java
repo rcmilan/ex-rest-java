@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-public class CityController {
+public class CountryController {
 
     private ICountryService _countryService;
 
-    public CityController(ICountryService countryService){
+    public CountryController(ICountryService countryService){
         _countryService = countryService;
     }
 
